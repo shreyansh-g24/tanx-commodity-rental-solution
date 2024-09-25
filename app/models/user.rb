@@ -3,11 +3,16 @@ require "bcrypt"
 class User < ApplicationRecord
   include BCrypt
 
-  validates_presence_of :first_name, :last_name, :email, :password, :password_confirmation
+  validates_presence_of :first_name, :last_name, :email, :user_type
   validates_uniqueness_of :email
-  validates :password, confirmation: true
 
-  enum user_type: %i[renter lender]
+  validates_presence_of :password, :password_confirmation, on: :create
+  validates :password, confirmation: true, on: :create
+
+  enum user_type: {
+    renter: "renter",
+    lender: "lender"
+  }
 
   def password
     @password ||= Password.new(password_hash)
