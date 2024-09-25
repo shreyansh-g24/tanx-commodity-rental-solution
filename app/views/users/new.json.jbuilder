@@ -1,1 +1,1 @@
-json.user_types @user_types
+json.user_types user_types
