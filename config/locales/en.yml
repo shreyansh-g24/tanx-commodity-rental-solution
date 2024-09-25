@@ -28,6 +28,8 @@
 #       enabled: "ON"
 
 en:
+  application:
+    authentication_error: Invalid token provided
   users:
     create:
       message: User created successfully
@@ -37,5 +39,8 @@ en:
       message: Logged in successfully
     logout:
       message: Logged out successfully
-  application:
-    authentication_error: Invalid token provided
+  lenders:
+    authentication_error: This action can only be accessed by a lender
+    commodities:
+      create:
+        message: Commodity created successfully

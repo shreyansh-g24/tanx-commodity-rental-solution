@@ -5,6 +5,8 @@ class ApplicationController < ActionController::API
     render "shared/_errors", locals: { errors: errors }, status: status
   end
 
+  private
+
   def authenticate_user!
     @user = User.find_by(jwt_token: request.headers["X-AUTH-TOKEN"])
     if @user.nil?

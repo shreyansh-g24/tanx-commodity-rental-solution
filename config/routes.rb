@@ -1,9 +1,15 @@
 Rails.application.routes.draw do
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
+  namespace :lenders do
+    resources :commodities, only: %i[new create]
+  end
+
   resources :users, only: :new do
-    post "login", to: "users#login", on: :collection
-    get "logout", to: "users#logout", on: :collection
+    collection do
+      post "login", to: "users#login"
+      get "logout", to: "users#logout"
+    end
   end
   post "/user/signup", to: "users#create"
 
