@@ -4,7 +4,7 @@ class User < ApplicationRecord
   include BCrypt
 
   validates_presence_of :first_name, :last_name, :email, :user_type
-  validates_uniqueness_of :email
+  validates :email, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }
 
   validates_presence_of :password, :password_confirmation, on: :create
   validates :password, confirmation: true, on: :create
