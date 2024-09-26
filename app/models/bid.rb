@@ -1,0 +1,30 @@
+class Bid < ApplicationRecord
+  belongs_to :user
+  belongs_to :listing
+
+  validates_uniqueness_of :listing, scope: :user
+  validates_presence_of :price_per_month, :number_of_months
+  validate :ensure_user_is_a_lender
+  validate :ensure_listing_is_active
+  validate :ensure_minimum_price_per_month
+
+  private
+
+  def ensure_user_is_a_lender
+    unless user.renter?
+      errors.add(I18n.t("custom.activerecord.errors.listing.bid.user_must_be_renter"))
+    end
+  end
+
+  def ensure_listing_is_active
+    unless listing.active?
+      errors.add(I18n.t("custom.activerecord.errors.listing.bid.listing_must_be_active"))
+    end
+  end
+
+  def ensure_minimum_price_per_month
+    unless price_per_month >= listing.quote_price_per_month
+      errors.add(I18n.t("custom.activerecord.errors.listing.bid.must_be_gteq_quote_price"))
+    end
+  end
+end

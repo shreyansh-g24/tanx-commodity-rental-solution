@@ -26,6 +26,7 @@ class User < ApplicationRecord
   end
 
   def generate_jwt_token
+    # TODO: Instead of a random token, use JWT with this token and signed_in_at data
     loop do
       token = SecureRandom.hex(32)
 
