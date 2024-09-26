@@ -28,30 +28,23 @@
 #       enabled: "ON"
 
 en:
+  shared:
+    not_found: "%{resource} not found"
+    updated_successfully: "%{resource} updated successfully"
+    created_successfully: "%{resource} created successfully"
+
   application:
     authentication_error: Invalid token provided
   users:
-    create:
-      message: User created successfully
     login:
-      email_not_found: Email not found
       incorrect_password: Password is incorrect
       message: Logged in successfully
     logout:
       message: Logged out successfully
   lenders:
     authentication_error: This action can only be accessed by a lender
-    commodities:
-      create:
-        message: Commodity created successfully
-    listings:
-      create:
-        message: Listing created successfully
   renters:
     authentication_error: This action can only be accessed by a renter
-    bids:
-      create:
-        message: Bid created successfully
 
   custom:
     activerecord:

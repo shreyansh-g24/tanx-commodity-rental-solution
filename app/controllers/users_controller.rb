@@ -9,7 +9,7 @@ class UsersController < ApplicationController
   def create
     user = User.new(user_params)
     if user.save
-      render_successfully({ user: user, message: I18n.t("users.create.message") }, :created)
+      render_successfully({ user: user, message: I18n.t("shared.created_successfully", resource: "User") }, :created)
     else
       respond_with_error(user.errors.full_messages, :unprocessable_entity)
     end
@@ -18,7 +18,7 @@ class UsersController < ApplicationController
   def login
     user = User.find_by(email: login_params[:email])
     if user.nil?
-      respond_with_error([ I18n.t("users.login.email_not_found") ], :unauthorized)
+      respond_with_error([ I18n.t("shared.not_found", resource: "Email") ], :unauthorized)
     elsif user.password != login_params[:password]
       respond_with_error([ I18n.t("users.login.incorrect_password") ], :unauthorized)
     else

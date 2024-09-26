@@ -7,7 +7,7 @@ class Lenders::ListingsController < Lenders::BaseController
   def create
     listing = Listing.new(listing_params)
     if listing.save
-      render_successfully({ listing: listing, message: I18n.t("lenders.listings.create.message") }, :created)
+      render_successfully({ listing: listing, message: I18n.t("shared.created_successfully", resource: "Listing") }, :created)
     else
       respond_with_error(listing.errors.full_messages, :unprocessable_entity)
     end

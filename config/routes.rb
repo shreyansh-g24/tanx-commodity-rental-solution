@@ -7,7 +7,8 @@ Rails.application.routes.draw do
   end
 
   namespace :renters do
-    resources :bids, only: %i[create]
+    resources :bids, only: %i[index create update]
+    resources :listings, only: %i[index]
   end
 
   resources :users, only: :new do

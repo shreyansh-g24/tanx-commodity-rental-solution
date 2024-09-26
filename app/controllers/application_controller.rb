@@ -12,7 +12,7 @@ class ApplicationController < ActionController::API
   private
 
   def authenticate_user!
-    Current.user = User.find_by(jwt_token: request.headers["X-AUTH-TOKEN"])
+    Current.user = User.where.not(jwt_token: nil).find_by(jwt_token: request.headers["X-AUTH-TOKEN"])
     if Current.user.nil?
       respond_with_error([ I18n.t("application.authentication_error") ], :unauthorized)
     end
