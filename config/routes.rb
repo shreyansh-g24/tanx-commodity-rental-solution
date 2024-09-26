@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   namespace :lenders do
-    resources :commodities, only: %i[new create]
+    resources :commodities, only: %i[index new create]
   end
 
   resources :users, only: :new do

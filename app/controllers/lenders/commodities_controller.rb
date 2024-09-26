@@ -1,4 +1,8 @@
 class Lenders::CommoditiesController < Lenders::BaseController
+  def index
+    render locals: { commodities: @user.commodities }, status: :ok
+  end
+
   def new
     render locals: { categories: Commodity.categories.values }, status: :ok
   end
