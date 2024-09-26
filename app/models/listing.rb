@@ -8,6 +8,9 @@ class Listing < ApplicationRecord
   validate :ensure_correct_logged_in_lender
   validate :ensure_only_1_active_listing
   validate :ensure_listing_is_active_on_update, on: :update
+  validate :ensure_valid_selected_bid
+
+  before_create :set_status_to_active
 
   enum status: {
     active: "active",
@@ -20,13 +23,13 @@ class Listing < ApplicationRecord
     highest_overall_price: "highest_overall_price"
   }
 
-  def select_bid
-    bid_id = case selection_strategy
+  def select_bid!
+    bid = case selection_strategy
     when selection_strategies[:highest_offered_amount] then find_highest_priced_bid
     when selection_strategies[:highest_overall_price] then find_highest_valued_bid
     end
 
-    update! bid_id.merge(status: statuses[:rented])
+    update!({ selected_bid: bid }.merge(status: statuses[:rented]))
   end
 
   private
@@ -49,11 +52,21 @@ class Listing < ApplicationRecord
     end
   end
 
+  def ensure_valid_selected_bid
+    if selected_bid.present? && selected_bid.price_per_month < quote_price_per_month
+      errors.add(I18n.t("custom.activerecord.errors.listing.selected_bid_price_must_be_higher_than_quoted"))
+    end
+  end
+
   def find_highest_priced_bid
-    bids.order("price_per_month DESC").first.id
+    bids.order("price_per_month DESC").first
   end
 
   def find_highest_valued_bid
-    bids.select("id, (price_per_month * number_of_months) AS value").order("value DESC").first.id
+    bids.select("*, (price_per_month * number_of_months) AS value").order("value DESC").first
+  end
+
+  def set_status_to_active
+    self.status = statuses[:active]
   end
 end
