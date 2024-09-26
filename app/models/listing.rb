@@ -7,6 +7,7 @@ class Listing < ApplicationRecord
   validates_presence_of :status, :quote_price_per_month, :selection_strategy
   validate :ensure_correct_logged_in_lender
   validate :ensure_only_1_active_listing
+  validate :ensure_no_rented_listing
   validate :ensure_listing_is_active_on_update, on: :update
   validate :ensure_valid_selected_bid
 
@@ -45,6 +46,12 @@ class Listing < ApplicationRecord
   def ensure_only_1_active_listing
     if active? && commodity.listings.where(status: Listing.statuses[:active]).count.positive?
       errors.add(:base, I18n.t("custom.activerecord.errors.listing.only_1_active_listing"))
+    end
+  end
+
+  def ensure_no_rented_listing
+    if (active? || rented?) && commodity.listings.where(status: Listing.statuses[:rented]).count.positive?
+      errors.add(:base, I18n.t("custom.activerecord.errors.listing.no_rented_listing"))
     end
   end
 

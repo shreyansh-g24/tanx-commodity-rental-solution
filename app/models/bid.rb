@@ -6,6 +6,7 @@ class Bid < ApplicationRecord
   validates_presence_of :price_per_month, :number_of_months
   validate :ensure_user_is_a_lender
   validate :ensure_listing_is_active
+  validate :ensure_commodity_is_not_rented
   validate :ensure_minimum_price_per_month
   validate :ensure_current_user_is_bidder, on: :update
 
@@ -30,6 +31,12 @@ class Bid < ApplicationRecord
   def ensure_minimum_price_per_month
     unless price_per_month >= listing.quote_price_per_month
       errors.add(:base, I18n.t("custom.activerecord.errors.bid.must_be_gteq_quote_price"))
+    end
+  end
+
+  def ensure_commodity_is_not_rented
+    if listing.commodity.listings.where(status: Listing.statuses[:rented]).count.positive?
+      errors.add(:base, I18n.t("custom.activerecord.errors.bid.commodity_is_already_rented"))
     end
   end
 
