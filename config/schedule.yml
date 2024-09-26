@@ -1,0 +1,6 @@
+expire_listing:
+  cron: "* * * * *"
+  class: ExpireListingJob
+expire_rental:
+  cron: "0 0 * * *"
+  class: ExpireRentalJob

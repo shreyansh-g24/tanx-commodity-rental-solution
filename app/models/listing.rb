@@ -26,13 +26,13 @@ class Listing < ApplicationRecord
     highest_overall_price: "highest_overall_price"
   }
 
-  def select_bid!
-    bid = case selection_strategy
-    when selection_strategies[:highest_offered_amount] then find_highest_priced_bid
-    when selection_strategies[:highest_overall_price] then find_highest_valued_bid
+  def expire!
+    bid = matching_bid
+    if bid.present?
+      update!({ selected_bid: bid }.merge(status: Listing.statuses[:rented]))
+    else
+      closed!
     end
-
-    update!({ selected_bid: bid }.merge(status: Listing.statuses[:rented]))
   end
 
   private
@@ -64,6 +64,13 @@ class Listing < ApplicationRecord
   def ensure_valid_selected_bid
     if selected_bid.present? && selected_bid.price_per_month < quote_price_per_month
       errors.add(:base, I18n.t("custom.activerecord.errors.listing.selected_bid_price_must_be_higher_than_quoted"))
+    end
+  end
+
+  def matching_bid
+    case selection_strategy
+    when selection_strategies[:highest_offered_amount] then find_highest_priced_bid
+    when selection_strategies[:highest_overall_price] then find_highest_valued_bid
     end
   end
 

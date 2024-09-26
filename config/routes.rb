@@ -1,5 +1,10 @@
+require "sidekiq/web"
+
 Rails.application.routes.draw do
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+
+  # mount Sidekiq::Web in your Rails app
+  mount Sidekiq::Web => "/sidekiq"
 
   namespace :lenders do
     resources :commodities, only: %i[index new create]

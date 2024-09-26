@@ -28,5 +28,15 @@ module TanxCommodityRentalSolution
     # Middleware like session, flash, cookies can be added back manually.
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
+
+    # Enable sidekiq
+    config.active_job.queue_adapter
+
+    # This also configures session_options for use below
+    config.session_store :cookie_store, key: "_tanx_rentals_session"
+    # Required for all session management (regardless of session_store)
+    config.middleware.use ActionDispatch::Cookies
+
+    config.middleware.use config.session_store, config.session_options
   end
 end
