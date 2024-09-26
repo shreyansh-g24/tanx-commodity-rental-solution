@@ -1,3 +1,4 @@
+json.id commodity.id
 json.name commodity.name
 json.description commodity.description
 json.category commodity.category

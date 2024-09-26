@@ -3,6 +3,7 @@ Rails.application.routes.draw do
 
   namespace :lenders do
     resources :commodities, only: %i[index new create]
+    resources :listings, only: %i[new create]
   end
 
   resources :users, only: :new do

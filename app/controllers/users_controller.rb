@@ -3,13 +3,13 @@ class UsersController < ApplicationController
 
   def new
     user_types = User.user_types.values
-    render locals: { user_types: user_types },  status: :ok
+    render_successfully({ user_types: user_types }, :ok)
   end
 
   def create
     user = User.new(user_params)
     if user.save
-      render locals: { user: user, message: I18n.t("users.create.message") }, status: :created
+      render_successfully({ user: user, message: I18n.t("users.create.message") }, :created)
     else
       respond_with_error(user.errors.full_messages, :unprocessable_entity)
     end
@@ -23,13 +23,13 @@ class UsersController < ApplicationController
       respond_with_error([ I18n.t("users.login.incorrect_password") ], :unauthorized)
     else
       user.generate_jwt_token
-      render locals: { user: user, message: I18n.t("users.login.message") }, status: :ok
+      render_successfully({ user: user, message: I18n.t("users.login.message") }, :ok)
     end
   end
 
   def logout
-    @user.reset_jwt_token
-    render locals: { message: I18n.t("users.logout.message") }, status: :ok
+    Current.user.reset_jwt_token
+    render_successfully({ message: I18n.t("users.logout.message") }, :ok)
   end
 
   private

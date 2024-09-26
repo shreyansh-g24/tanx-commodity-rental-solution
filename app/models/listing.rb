@@ -10,7 +10,9 @@ class Listing < ApplicationRecord
   validate :ensure_listing_is_active_on_update, on: :update
   validate :ensure_valid_selected_bid
 
-  before_create :set_status_to_active
+  attr_readonly :commodity
+
+  before_validation :set_status_to_active
 
   enum status: {
     active: "active",
@@ -29,32 +31,32 @@ class Listing < ApplicationRecord
     when selection_strategies[:highest_overall_price] then find_highest_valued_bid
     end
 
-    update!({ selected_bid: bid }.merge(status: statuses[:rented]))
+    update!({ selected_bid: bid }.merge(status: Listing.statuses[:rented]))
   end
 
   private
 
   def ensure_correct_logged_in_lender
-    if commodity.user.id != @user.id || !@user.lender?
-      errors.add(I18n.t("custom.activerecord.errors.listing.incorrect_logged_in_lender"))
+    if commodity.user.id != Current.user.id || !Current.user.lender?
+      errors.add(:base, I18n.t("custom.activerecord.errors.listing.incorrect_logged_in_lender"))
     end
   end
 
   def ensure_only_1_active_listing
-    unless active? && commodity.listings.where(status: statuses[:active]).count.zero?
-      errors.add(I18n.t("custom.activerecord.errors.listing.only_1_active_listing"))
+    if active? && commodity.listings.where(status: Listing.statuses[:active]).count.positive?
+      errors.add(:base, I18n.t("custom.activerecord.errors.listing.only_1_active_listing"))
     end
   end
 
   def ensure_listing_is_active_on_update
     unless active?
-      errors.add(I18n.t("custom.activerecord.errors.listing.must_be_active_for_update"))
+      errors.add(:base, I18n.t("custom.activerecord.errors.listing.must_be_active_for_update"))
     end
   end
 
   def ensure_valid_selected_bid
     if selected_bid.present? && selected_bid.price_per_month < quote_price_per_month
-      errors.add(I18n.t("custom.activerecord.errors.listing.selected_bid_price_must_be_higher_than_quoted"))
+      errors.add(:base, I18n.t("custom.activerecord.errors.listing.selected_bid_price_must_be_higher_than_quoted"))
     end
   end
 
@@ -67,6 +69,6 @@ class Listing < ApplicationRecord
   end
 
   def set_status_to_active
-    self.status = statuses[:active]
+    self.status = Listing.statuses[:active]
   end
 end

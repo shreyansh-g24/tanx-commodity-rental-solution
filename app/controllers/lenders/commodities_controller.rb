@@ -1,16 +1,16 @@
 class Lenders::CommoditiesController < Lenders::BaseController
   def index
-    render locals: { commodities: @user.commodities }, status: :ok
+    render_successfully({ commodities: Current.user.commodities }, :ok)
   end
 
   def new
-    render locals: { categories: Commodity.categories.values }, status: :ok
+    render_successfully({ categories: Commodity.categories.values }, :ok)
   end
 
   def create
-    commodity = Commodity.new(commodity_params.merge(user: @user))
+    commodity = Commodity.new(commodity_params.merge(user: Current.user))
     if commodity.save
-      render locals: { message: I18n.t("lenders.commodities.create.message"), commodity: commodity }, status: :created
+      render_successfully({ message: I18n.t("lenders.commodities.create.message"), commodity: commodity }, :created)
     else
       respond_with_error(commodity.errors.full_messages, :unprocessable_entity)
     end

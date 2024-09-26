@@ -5,11 +5,15 @@ class ApplicationController < ActionController::API
     render "shared/_errors", locals: { errors: errors }, status: status
   end
 
+  def render_successfully(locals, status)
+    render locals: locals, status: status
+  end
+
   private
 
   def authenticate_user!
-    @user = User.find_by(jwt_token: request.headers["X-AUTH-TOKEN"])
-    if @user.nil?
+    Current.user = User.find_by(jwt_token: request.headers["X-AUTH-TOKEN"])
+    if Current.user.nil?
       respond_with_error([ I18n.t("application.authentication_error") ], :unauthorized)
     end
   end
