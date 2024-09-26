@@ -47,6 +47,11 @@ en:
     listings:
       create:
         message: Listing created successfully
+  renters:
+    authentication_error: This action can only be accessed by a renter
+    bids:
+      create:
+        message: Bid created successfully
 
   custom:
     activerecord:

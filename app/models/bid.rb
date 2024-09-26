@@ -17,25 +17,25 @@ class Bid < ApplicationRecord
 
   def ensure_user_is_a_lender
     unless user.renter?
-      errors.add(:base, I18n.t("custom.activerecord.errors.listing.bid.user_must_be_renter"))
+      errors.add(:base, I18n.t("custom.activerecord.errors.bid.user_must_be_renter"))
     end
   end
 
   def ensure_listing_is_active
     unless listing.active?
-      errors.add(:base, I18n.t("custom.activerecord.errors.listing.bid.listing_must_be_active"))
+      errors.add(:base, I18n.t("custom.activerecord.errors.bid.listing_must_be_active"))
     end
   end
 
   def ensure_minimum_price_per_month
     unless price_per_month >= listing.quote_price_per_month
-      errors.add(:base, I18n.t("custom.activerecord.errors.listing.bid.must_be_gteq_quote_price"))
+      errors.add(:base, I18n.t("custom.activerecord.errors.bid.must_be_gteq_quote_price"))
     end
   end
 
   def ensure_current_user_is_bidder
     unless Current.user.id == Bid.find(id).user_id
-      errors.add(:base, I18n.t("custom.activerecord.errors.listing.bid.current_user_must_be_bidder"))
+      errors.add(:base, I18n.t("custom.activerecord.errors.bid.current_user_must_be_bidder"))
     end
   end
 

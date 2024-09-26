@@ -4,7 +4,7 @@ json.quote_price_per_month listing.quote_price_per_month
 
 if listing.selected_bid.present?
   json.selected_bid do
-    json.partial! "bids/bid", bid: listing.selected_bid
+    json.partial! "renters/bids/bid", bid: listing.selected_bid
   end
 end
 

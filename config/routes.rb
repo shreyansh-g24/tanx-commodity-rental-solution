@@ -6,6 +6,10 @@ Rails.application.routes.draw do
     resources :listings, only: %i[new create]
   end
 
+  namespace :renters do
+    resources :bids, only: %i[create]
+  end
+
   resources :users, only: :new do
     collection do
       post "login", to: "users#login"
