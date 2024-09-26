@@ -35,7 +35,7 @@ class Bid < ApplicationRecord
   end
 
   def ensure_commodity_is_not_rented
-    if listing.commodity.listings.where(status: Listing.statuses[:rented]).count.positive?
+    if listing.commodity.listings.rented.count.positive?
       errors.add(:base, I18n.t("custom.activerecord.errors.bid.commodity_is_already_rented"))
     end
   end

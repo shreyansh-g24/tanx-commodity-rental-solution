@@ -44,13 +44,13 @@ class Listing < ApplicationRecord
   end
 
   def ensure_only_1_active_listing
-    if active? && commodity.listings.where(status: Listing.statuses[:active]).count.positive?
+    if active? && commodity.listings.active.count.positive?
       errors.add(:base, I18n.t("custom.activerecord.errors.listing.only_1_active_listing"))
     end
   end
 
   def ensure_no_rented_listing
-    if (active? || rented?) && commodity.listings.where(status: Listing.statuses[:rented]).count.positive?
+    if (active? || rented?) && commodity.listings.rented.count.positive?
       errors.add(:base, I18n.t("custom.activerecord.errors.listing.no_rented_listing"))
     end
   end
