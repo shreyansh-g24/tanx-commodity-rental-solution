@@ -2,7 +2,13 @@ class Renters::BidsController < Renters::BaseController
   before_action :load_bid, only: %i[update]
 
   def index
-    render_successfully({ bids: Current.user.bids }, :ok)
+    render_successfully(
+      {
+        bids: Current.user.bids.includes([ { listing: [ :selected_bid, { commodity: :user } ] }, :user ]),
+        show_listing: true
+      },
+      :ok
+    )
   end
 
   def create
