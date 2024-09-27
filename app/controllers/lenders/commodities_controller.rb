@@ -1,6 +1,6 @@
 class Lenders::CommoditiesController < Lenders::BaseController
   def index
-    render_successfully({ commodities: Current.user.commodities }, :ok)
+    render_successfully({ commodities: Current.user.commodities.includes(:user) }, :ok)
   end
 
   def new
