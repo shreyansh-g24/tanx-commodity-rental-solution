@@ -52,7 +52,6 @@ en:
         listing:
           incorrect_logged_in_lender: Only the creator of the commodity can list it
           only_1_active_listing: Only 1 active listing can be present
-          must_be_active_for_update: Only active listings can be updated
           selected_bid_price_must_be_higher_than_quoted: Offered price must be higher than the quoted price
           no_rented_listing: Commodity is already rented out
         commodity:
