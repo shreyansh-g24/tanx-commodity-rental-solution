@@ -8,12 +8,11 @@ class Listing < ApplicationRecord
   validate :ensure_correct_logged_in_lender
   validate :ensure_only_1_active_listing
   validate :ensure_no_rented_listing
-  validate :ensure_listing_is_active_on_update, on: :update
   validate :ensure_valid_selected_bid
 
   attr_readonly :commodity
 
-  before_validation :set_status_to_active
+  before_validation :set_status_to_active, on: :create
 
   enum status: {
     active: "active",
@@ -26,7 +25,8 @@ class Listing < ApplicationRecord
     highest_overall_price: "highest_overall_price"
   }
 
-  def expire!
+  def expire_listing!
+    @is_expiring = true
     bid = matching_bid
     if bid.present?
       update!({ selected_bid: bid }.merge(status: Listing.statuses[:rented]))
@@ -35,29 +35,28 @@ class Listing < ApplicationRecord
     end
   end
 
+  def expire_rental!
+    @is_expiring = true
+    closed!
+  end
+
   private
 
   def ensure_correct_logged_in_lender
-    if commodity.user.id != Current.user.id || !Current.user.lender?
+    if !@is_expiring && commodity.user.id != Current.user&.id
       errors.add(:base, I18n.t("custom.activerecord.errors.listing.incorrect_logged_in_lender"))
     end
   end
 
   def ensure_only_1_active_listing
-    if active? && commodity.listings.active.count.positive?
+    if active? && commodity.listings.where.not(id: id).active.count.positive?
       errors.add(:base, I18n.t("custom.activerecord.errors.listing.only_1_active_listing"))
     end
   end
 
   def ensure_no_rented_listing
-    if (active? || rented?) && commodity.listings.rented.count.positive?
+    if (active? || rented?) && commodity.listings.where.not(id: id).rented.count.positive?
       errors.add(:base, I18n.t("custom.activerecord.errors.listing.no_rented_listing"))
-    end
-  end
-
-  def ensure_listing_is_active_on_update
-    unless active?
-      errors.add(:base, I18n.t("custom.activerecord.errors.listing.must_be_active_for_update"))
     end
   end
 
@@ -69,8 +68,8 @@ class Listing < ApplicationRecord
 
   def matching_bid
     case selection_strategy
-    when selection_strategies[:highest_offered_amount] then find_highest_priced_bid
-    when selection_strategies[:highest_overall_price] then find_highest_valued_bid
+    when Listing.selection_strategies[:highest_offered_amount] then find_highest_priced_bid
+    when Listing.selection_strategies[:highest_overall_price] then find_highest_valued_bid
     end
   end
 
