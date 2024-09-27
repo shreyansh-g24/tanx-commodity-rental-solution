@@ -13,6 +13,7 @@ Run the following steps to set up the application on local.
 
 ```bash
 bundle install
+cp config/database.yml.sample config/database.yml
 bundle exec rails db:create
 bundle exec rails db:migrate
 gem install foreman
