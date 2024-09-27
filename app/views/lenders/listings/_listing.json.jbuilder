@@ -1,3 +1,4 @@
+json.id listing.id
 json.selection_strategy listing.selection_strategy
 json.status listing.status
 json.quote_price_per_month listing.quote_price_per_month
