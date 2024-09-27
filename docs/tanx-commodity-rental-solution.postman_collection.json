@@ -1,0 +1,386 @@
+{
+	"info": {
+		"_postman_id": "a01baadb-b986-4753-a7ec-0943346b3a95",
+		"name": "tanx-commodity-rental-solution",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "38582384"
+	},
+	"item": [
+		{
+			"name": "/user/signup",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "// {\n//     \"user\": {\n//         \"first_name\": \"Tom\",\n//         \"last_name\": \"Sawyer\",\n//         \"email\": \"tom@example.com\",\n//         \"password\": \"welcome\",\n//         \"password_confirmation\": \"welcome\",\n//         \"user_type\": \"lender\"\n//     }\n// }\n\n{\n    \"user\": {\n        \"first_name\": \"TomR\",\n        \"last_name\": \"Sawyer\",\n        \"email\": \"tomR@example.com\",\n        \"password\": \"welcome\",\n        \"password_confirmation\": \"welcome\",\n        \"user_type\": \"renter\"\n    }\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/user/signup",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"user",
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/users/new",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/users/new",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"users",
+						"new"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/users/login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "// {\n//     \"login\": {\n//         \"email\": \"tom@example.com\",\n//         \"password\": \"welcome\"\n//     }\n// }\n\n{\n    \"login\": {\n        \"email\": \"tomR@example.com\",\n        \"password\": \"welcome\"\n    }\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/users/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"users",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/users/logout",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-AUTH-TOKEN",
+						"value": "3f89b78602bd48537164f8c6fd6a4076d1dac084c7bc991e6b57754d1705ea56",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:3000/users/logout",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"users",
+						"logout"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/lenders/commodities/new",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-AUTH-TOKEN",
+						"value": "2834813acb5ed373c5890ca091d9216b077a60e56d36511e0b02b19f2a07ef44",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:3000/lenders/commodities/new",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"lenders",
+						"commodities",
+						"new"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/lenders/commodities",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-AUTH-TOKEN",
+						"value": "2834813acb5ed373c5890ca091d9216b077a60e56d36511e0b02b19f2a07ef44",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"commodity\": {\n        \"name\": \"Item 1\",\n        \"description\": \"Description\",\n        \"category\": \"shoes\"\n    }\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/lenders/commodities",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"lenders",
+						"commodities"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "lenders/commodities",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-AUTH-TOKEN",
+						"value": "2834813acb5ed373c5890ca091d9216b077a60e56d36511e0b02b19f2a07ef44",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:3000/lenders/commodities",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"lenders",
+						"commodities"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/lenders/listings",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-AUTH-TOKEN",
+						"value": "2834813acb5ed373c5890ca091d9216b077a60e56d36511e0b02b19f2a07ef44",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"listing\": {\n        \"commodity_id\": 4,\n        \"quote_price_per_month\": 100.12,\n        \"selection_strategy\": \"highest_offered_amount\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/lenders/listings",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"lenders",
+						"listings"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/lenders/listings/new",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-AUTH-TOKEN",
+						"value": "2834813acb5ed373c5890ca091d9216b077a60e56d36511e0b02b19f2a07ef44"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:3000/lenders/listings/new",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"lenders",
+						"listings",
+						"new"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/renters/bids",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-AUTH-TOKEN",
+						"value": "f710ffc0efcb0f7cef5d09baf6c7e34e3fd685b5c12432a843fb74020148ea40",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"bid\": {\n        \"listing_id\": 4,\n        \"price_per_month\": 112.23,\n        \"number_of_months\": 10\n    }\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/renters/bids",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"renters",
+						"bids"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/renters/bids",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-AUTH-TOKEN",
+						"value": "f710ffc0efcb0f7cef5d09baf6c7e34e3fd685b5c12432a843fb74020148ea40",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:3000/renters/bids",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"renters",
+						"bids"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/renters/bids/:id",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "X-AUTH-TOKEN",
+						"value": "f710ffc0efcb0f7cef5d09baf6c7e34e3fd685b5c12432a843fb74020148ea40",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"bid\": {\n        \"price_per_month\": 212,\n        \"number_of_months\": 1\n    }\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/renters/bids/4",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"renters",
+						"bids",
+						"4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/renters/listings",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-AUTH-TOKEN",
+						"value": "f710ffc0efcb0f7cef5d09baf6c7e34e3fd685b5c12432a843fb74020148ea40",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:3000/renters/listings",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"renters",
+						"listings"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
