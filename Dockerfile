@@ -71,6 +71,7 @@ ADD . /rails-app
 WORKDIR /rails-app
 
 RUN bundle install
+RUN gem install foreman
 
 COPY ./bin/docker-entrypoint /usr/bin
 RUN chmod +x /usr/bin/docker-entrypoint
@@ -78,4 +79,4 @@ ENTRYPOINT ["docker-entrypoint"]
 
 EXPOSE 3000
 
-CMD ["bundle", "exec", "rails", "server", "-p", "3000", "-b", "0.0.0.0"]
+CMD ["foreman", "start", "-f", "Procfile.dev"]
