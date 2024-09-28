@@ -9,7 +9,7 @@
 
 ## Set up the rails application
 
-Run the following steps to set up the application on local.
+Run the following steps to set up the application on local -
 
 ```bash
 bundle install
