@@ -1,13 +1,25 @@
 #!/bin/bash -e
 
-# Enable jemalloc for reduced memory usage and latency.
-if [ -z "${LD_PRELOAD+x}" ] && [ -f /usr/lib/*/libjemalloc.so.2 ]; then
-  export LD_PRELOAD="$(echo /usr/lib/*/libjemalloc.so.2)"
-fi
+# # Enable jemalloc for reduced memory usage and latency.
+# if [ -z "${LD_PRELOAD+x}" ] && [ -f /usr/lib/*/libjemalloc.so.2 ]; then
+#   export LD_PRELOAD="$(echo /usr/lib/*/libjemalloc.so.2)"
+# fi
 
-# If running the rails server then create or migrate existing database
-if [ "${1}" == "./bin/rails" ] && [ "${2}" == "server" ]; then
-  ./bin/rails db:prepare
-fi
+# # If running the rails server then create or migrate existing database
+# if [ "${1}" == "./bin/rails" ] && [ "${2}" == "server" ]; then
+#   ./bin/rails db:prepare
+# fi
 
-exec "${@}"
+# exec "${@}"
+
+set -e
+
+# Remove a potentially pre-existing server.pid for Rails.
+rm -f ./tmp/pids/server.pid
+
+bundle exec rails db:drop
+bundle exec rails db:create
+bundle exec rails db:migrate
+
+# Then exec the container's main process (CMD in the Dockerfile).
+exec "$@"
