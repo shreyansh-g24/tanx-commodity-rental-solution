@@ -7,7 +7,7 @@
 3. Install `PostgreSQL`.
 4. Install `redis`.
 
-## Set up the rails application
+## Set up the rails application manually
 
 Run the following steps to set up the application on local -
 
@@ -21,6 +21,10 @@ foreman -f Procfile.dev
 ```
 
 You can run the Rails and Sidekiq servers together with `foreman` or choose to run them individually in different terminals.
+
+## Set up the application using docker
+1. Install docker.
+2. Run `docker-compose up`.
 
 ## Use the application
 Use `Postman` or any other API testing tool of your choice to interact with the application on `localhost:3000`.
