@@ -45,6 +45,12 @@ en:
     authentication_error: This action can only be accessed by a lender
   renters:
     authentication_error: This action can only be accessed by a renter
+  wallets:
+    deposit:
+      deposit_successful: Amount deposited successfully
+    withdrawal:
+      withdrawal_successful: Withdrew amount successfully
+      not_enough_balance: Insufficient balance
 
   custom:
     activerecord:

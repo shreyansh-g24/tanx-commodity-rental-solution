@@ -6,6 +6,11 @@ Rails.application.routes.draw do
   # mount Sidekiq::Web in your Rails app
   mount Sidekiq::Web => "/sidekiq"
 
+  namespace :wallets do
+    get "/deposit", to: "wallets#deposit"
+    get "/withdrawal", to: "wallets#withdrawal"
+  end
+
   namespace :lenders do
     resources :commodities, only: %i[index new create]
     resources :listings, only: %i[new create]

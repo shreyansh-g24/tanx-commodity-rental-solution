@@ -5,6 +5,7 @@ class User < ApplicationRecord
 
   has_many :commodities
   has_many :bids
+  has_many :wallets
 
   validates_presence_of :first_name, :last_name, :email, :user_type
   validates :email, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }
